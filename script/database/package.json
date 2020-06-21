@@ -1,0 +1,21 @@
+{
+  "name": "database_script",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "reset": "env-cmd -r ../../.env-cmdrc -e development node index.js reset && env-cmd -r ../../.env-cmdrc -e test node index.js reset"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "mysql": "^2.17.1",
+    "mysql-import": "^3.0.6",
+    "mysqldump": "^3.1.0",
+    "util": "^0.12.1",
+    "yargs": "^15.0.2"
+  },
+  "devDependencies": {
+    "env-cmd": "^10.0.1"
+  }
+}
