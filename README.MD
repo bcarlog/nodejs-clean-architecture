@@ -21,17 +21,17 @@ npm run test
 
 ## Tabla de contenido
 
-[Arquitectura en componentes](#headers)
+[1. Arquitectura en componentes](#headers)
 
-[Validaciones](#validations)
+[2. Validaciones](#validations)
 
-[Middlewares](#middlewares)
+[3. Middlewares](#middlewares)
 
-[Test reutilizables](#tests)
+[4. Test reutilizables](#tests)
 
-[Manejo de errores](#error-handler)
+[5. Manejo de errores](#error-handler)
 
-[Varialbes](#variables)
+[6. Variables](#variables)
 
 
 
