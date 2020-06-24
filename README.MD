@@ -1,4 +1,4 @@
-# ARQUITECTURA LIMPIA EN NODEJS
+# ARQUITECTURA LIMPIA EN NODEJS (API)
 
 ## Requisito previos
 
@@ -43,15 +43,14 @@ La arquitectura base es componentes, cada carpeta representa un componente, en e
 
 No significa que representen cada tabla en la base de datos, estos depende de los requisitos del software.
 
-La arquitectura en componentes se escogió para tener un orden más intuitivo para cambiar un requisito. Si estuvia separada en carpetas diferentes al querer realizar un cambio se tendría que encontrar, abrir cada carpeta y buscar el archivo deseado, esto puede tomar mas tiempo.
-
-
+La arquitectura en componentes se escogió para tener un orden más intuitivo para cambiar un requisito. Si estuviera separá en carpetas diferentes al querer realizar un cambio se tendría que encontrar, abrir cada carpeta y buscar el archivo deseado, esto puede tomar mas tiempo.
 
 <a name="validations"/>
 
 ## Validaciones
 
-En las rutas existe concepto de "pasarse la bola", gracias a ello se puede realizar una cascada de filtración de datos.
+
+En las rutas existe el concepto de "pasarse la bola", gracias a ello se puede realizar una cascada de filtración de datos.
 
 ![image-20200621000855289](.README.assets/image-20200621000855289.png)
 
@@ -60,7 +59,6 @@ Primero: Se puede verificar si es un usuario autenticado
 Segundo: Satinizar o validar los datos de entrada del usuario
 
 Tercero: Realizar las operaciones del controlador y la base de datos
-
 
 
 <a name="middlewares"/>
