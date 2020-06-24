@@ -19,6 +19,8 @@ npm run dev
 npm run test
 ```
 
+## Tabla de contenido
+
 [Arquitectura en componentes](#headers)
 
 [Validaciones](#validations)
@@ -29,7 +31,7 @@ npm run test
 
 [Manejo de errores](#error-handler)
 
-[Variables
+[Varialbes](#variables)
 
 
 
