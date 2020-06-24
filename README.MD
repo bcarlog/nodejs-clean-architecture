@@ -19,7 +19,21 @@ npm run dev
 npm run test
 ```
 
+[Arquitectura en componentes](#headers)
 
+[Validaciones](#validations)
+
+[Middlewares](#middlewares)
+
+[Test reutilizables](#tests)
+
+[Manejo de errores](#error-handler)
+
+[Variables
+
+
+
+<a name="architecture-base-components"/>
 
 ## Arquitectura en componentes
 
@@ -29,13 +43,15 @@ La arquitectura base es componentes, cada carpeta representa un componente, en e
 
 No significa que representen cada tabla en la base de datos, estos depende de los requisitos del software.
 
-La arquitectura en componentes se escogió para tener un orden más intuitivo para cambiar un requisito. Si estuvia separá en carpetas diferentes al querer realizar un cambio se tendría que encontrar, abrir cada carpeta y buscar el archivo deseado, esto puede tomar mas tiempo.
+La arquitectura en componentes se escogió para tener un orden más intuitivo para cambiar un requisito. Si estuvia separada en carpetas diferentes al querer realizar un cambio se tendría que encontrar, abrir cada carpeta y buscar el archivo deseado, esto puede tomar mas tiempo.
 
 
+
+<a name="validations"/>
 
 ## Validaciones
 
-En las rutas se existe concepto de "pasarse la bola", gracias a ello se puede realizar una cascada de filtración de datos.
+En las rutas existe concepto de "pasarse la bola", gracias a ello se puede realizar una cascada de filtración de datos.
 
 ![image-20200621000855289](.README.assets/image-20200621000855289.png)
 
@@ -46,6 +62,8 @@ Segundo: Satinizar o validar los datos de entrada del usuario
 Tercero: Realizar las operaciones del controlador y la base de datos
 
 
+
+<a name="middlewares"/>
 
 ## Middleware
 
@@ -61,9 +79,11 @@ Los modelos o entidades si representan las tablas en la base de datos.
 
 
 
+<a name="tests"/>
+
 ## Test de integración reutilizables
 
-Cuando se realiza un test integración se comprueba que los datos se almacenaron correctamente en la base de datos. Si un tabla depende de otra por ejemplo tareas y usuario se tiene que hacer el registro del usuario primero. Entonces es necesario hacer los test reutilizables.
+Cuando se realiza un test integración se comprueba que los datos se almacenaron correctamente en la base de datos y los servicios funcionen bien. Si una tabla depende de otra por ejemplo tareas y usuario se tiene que hacer el registro del usuario primero. Entonces es necesario hacer los test reutilizables.
 
 Una buena práctica es tener los test en cada componente, estos se dividen en dos:
 
@@ -137,7 +157,7 @@ const appReq = request(app)
 const { User, Task } = require('../../../models')
 
 const TaskRequests = require('./TaskRequests')(appReq)
-const UserRequests = require('../../user/__test__/UserRequests')(appReq) // Reutilzación
+const UserRequests = require('../../user/__test__/UserRequests')(appReq) // Reutilización
 
 let token = null
 
@@ -156,6 +176,8 @@ test('Should register a task', async() => {
 
 
 
+<a name="error-handler"/>
+
 ## Manejo de errores global
 
 Si ocurre un error fatal es necesario enviar un mensaje al administrador o guardarlo en un log.
@@ -171,7 +193,7 @@ exports.create = asyncHandler(async (req, res) => {
 })
 ```
 
-Cualquier error dentro de la función asyncHandler sera reportada.
+Cualquier error dentro de la función asyncHandler será reportada.
 
 Por ello en el archivo app.js se puede manejar todos los errores de la aplicación
 
@@ -199,6 +221,8 @@ npm run reset-database
 El software se encargará de vaciar => crear tablas y poblarlas con datos estáticos.
 
 
+
+<a name="variables"/>
 
 ## Variables globales en la base de datos
 
