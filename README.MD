@@ -1,11 +1,11 @@
-# ARQUITECTURA LIMPIA EN NODEJS (API)
+# CLEAN ARCHITECTURE IN NODEJS (API)
 
-## Requisito previos
+## Prerequisites
 
-* Tener dos base de datos creadas (nodejs y nodejs_test)
-* Poner permisos base de datos root en el archivo .env-cmdrc
+* You must have two databases created (nodejs y nodejs_test)
+* Config database permisions in .env-cmdrc (file)
 
-### Instalación rápida
+### Fast installation
 
 ```bash
 npm install
@@ -13,23 +13,23 @@ npm run reset-database
 npm run dev
 ```
 
-### Ejecutar pruebas
+### Execute tests
 
 ```bash
 npm run test
 ```
 
-## Tabla de contenido
+## Index
 
-[1. Arquitectura en componentes](#headers)
+[1. component-based architecture](#headers)
 
-[2. Validaciones](#validations)
+[2. Validations](#validations)
 
 [3. Middlewares](#middlewares)
 
-[4. Test reutilizables](#tests)
+[4. Reusable tests](#tests)
 
-[5. Manejo de errores](#error-handler)
+[5. Error Handler](#error-handler)
 
 [6. Variables](#variables)
 
@@ -37,63 +37,62 @@ npm run test
 
 <a name="architecture-base-components"/>
 
-## Arquitectura en componentes
+## component-based architecture
 
-La arquitectura base es componentes, cada carpeta representa un componente, en este caso tareas y usuario.
+Each folder represents a component, in this case tasks and users.
 
 ![image-20200620235319439](.README.assets/image-20200620235319439.png)
 
-No significa que representen cada tabla en la base de datos, estos depende de los requisitos del software.
+It doesn't mean that it represents each table in the DB, this depends of the software requirements.
 
-La arquitectura en componentes se escogió para tener un orden más intuitivo para cambiar un requisito. Si estuviera separá en carpetas diferentes al querer realizar un cambio se tendría que encontrar, abrir cada carpeta y buscar el archivo deseado, esto puede tomar mas tiempo.
+The component-based architecture was chosen, to have a more intuitive order to change a requirement. If I need to change something, I open every folder and files involved with that change, It takes more time.
 
 <a name="validations"/>
 
-## Validaciones
+## Validations
 
 
-En las rutas existe el concepto de "pasarse la bola", gracias a ello se puede realizar una cascada de filtración de datos.
+Thanks to middlewares, we can implemented a cascade based filtration.
 
 ![image-20200621000855289](.README.assets/image-20200621000855289.png)
 
-Primero: Se puede verificar si es un usuario autenticado
+First: I can verify the authentication.
 
-Segundo: Satinizar o validar los datos de entrada del usuario
+Second: Satinize or validate the input-data of the user.
 
-Tercero: Realizar las operaciones del controlador y la base de datos
+Third: Do operations in the controller and DB.
 
 
 <a name="middlewares"/>
 
 ## Middleware
 
-Son intermediarios entre datos del cliente y la lógica del servidor. Dentro de ella está la validación de usuario.
+This is the file to authenticate.
 
 ![image-20200620235041202](.README.assets/image-20200620235041202.png)
 
-## Modelos
+## Models
 
-Los modelos o entidades si representan las tablas en la base de datos.
+Each models represent each database table.
 
 ![image-20200620234916733](.README.assets/image-20200620234916733.png)
 
 
-
 <a name="tests"/>
 
-## Test de integración reutilizables
+## Reusable tests
 
-Cuando se realiza un test integración se comprueba que los datos se almacenaron correctamente en la base de datos y los servicios funcionen bien. Si una tabla depende de otra por ejemplo tareas y usuario se tiene que hacer el registro del usuario primero. Entonces es necesario hacer los test reutilizables.
+When an integration test is carried out, it is verified that the data was stored correctly in the database and that the services work well. If a table depends on another, for example tasks and user, the user must be registered first. Then it is necessary to make the reusable tests.
 
-Una buena práctica es tener los test en cada componente, estos se dividen en dos:
+A good practice is has the test inside in each component, the test is divided in two parts:
 
-* Request: Son las solicitudes al API
+* Request: They are the requests to the API
 
-* Test: Maneja las solicitudes para comprobar el estado
+* Test: Management the requests and check their states.
 
   
 
-Ejemplo de Request "UserRequest.js"
+Example of Request "UserRequest.js"
 
 ```js
 const userData = {
@@ -118,7 +117,7 @@ class UserRequests {
 module.exports = (arg1) => { return new UserRequests(arg1) }
 ```
 
-Ejemplo de Test "UserTest.js"
+Example of Test "UserTest.js"
 
 ```js
 const request = require('supertest')
@@ -141,9 +140,9 @@ test('Should register a user', async() => {
 })
 ```
 
+Now I 
 
-
-Ahora se reutiliza el registro de usuario para registrar una tarea "TaskTest.js"
+User UserRequests is now reused before register a task "TaskTest.js"
 
 ```js
 require('../../../utils/constants')
@@ -178,13 +177,14 @@ test('Should register a task', async() => {
 
 <a name="error-handler"/>
 
-## Manejo de errores global
+## Error Handler
 
-Si ocurre un error fatal es necesario enviar un mensaje al administrador o guardarlo en un log.
+If a fatal error occurs it is necessary to send a message to the administrator or save it in a log.
 
-Por ello se uso express-async-handler que envuelve cualquier función y está a la escucha de errores.
+Therefore express-async-handler was used to wrap any function and listen for errors.
 
-Se usó en los controladores
+
+It was used in the controllers.
 
 ```js
 const asyncHandler = require('express-async-handler')
@@ -193,9 +193,9 @@ exports.create = asyncHandler(async (req, res) => {
 })
 ```
 
-Cualquier error dentro de la función asyncHandler será reportada.
+Any error within the function asyncHandler will be reported.
 
-Por ello en el archivo app.js se puede manejar todos los errores de la aplicación
+For this reason, the app.js file can handle all the errors of the application.
 
 ```js
 ...
@@ -206,29 +206,29 @@ app.use(async(err, req, res, next) => {
 })
 ```
 
-handlerError maneja todos los errores encapsulados
+handlerError handles all encapsulated errors.
 
 
 
-## Crear y poblar base de datos rápidamente
+## Create and populate the database quickly.
 
-Si ejecuta el comando
+You must execute
 
 ```bash
 npm run reset-database
 ```
 
-El software se encargará de vaciar => crear tablas y poblarlas con datos estáticos.
+The software will empty => creating tables and populating them with static data.
 
 
 
 <a name="variables"/>
 
-## Variables globales en la base de datos
+## Global variables
 
-Comparemos dos códigos para desabilitar un usuario con un ORM.
+Compare two codes to disable a user with an ORM.
 
-Ejemplo 1:
+Example 1:
 
 ```js
 await Task.update({
@@ -236,7 +236,7 @@ await Task.update({
 }, { where: { Id: id } })
 ```
 
-Ejemplo 2:
+Example 2:
 
 ```js
 await Task.update({
@@ -244,9 +244,8 @@ await Task.update({
 }, { where: { Id: id } })
 ```
 
-En la base de datos 1 es activo y 2 es inactivo
+In the database 1 es ACTIVE and 2 is INACTIVE
 
-El ejemplo 1 no es intuitivo, si luego de una semana lo miras talvéz no te acuerdes que rayos significa 2.
-
-El ejemplo 2 es más intuitivo, por lo tanto es más facil de leer en entender.
+Example 1 is not intuitive, if after a week you look at it maybe you don't remember what the hell means 2.
+Example 2 is more intuitive, Therefore It's easier to read and understand.
 
