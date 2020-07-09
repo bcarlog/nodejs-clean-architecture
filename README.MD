@@ -127,14 +127,14 @@ const appReq = request(app)
 
 const { User } = require('../../../models')
 
-const UserRequests = require('./UserRequests')(appReq) // Uso de los request
+const UserRequests = require('./UserRequests')(appReq) // Reusing
 
 beforeEach(async()=>{
     await User.destroy({where:{},truncate:true})
 })
 
 test('Should register a user', async() => {
-    const res = await UserRequests.create() // Esperamos la respuesta
+    const res = await UserRequests.create() 
     expect(res.status).toBe(201)
     expect(typeof res.body.token).toBe('string')
 })
@@ -156,14 +156,14 @@ const appReq = request(app)
 const { User, Task } = require('../../../models')
 
 const TaskRequests = require('./TaskRequests')(appReq)
-const UserRequests = require('../../user/__test__/UserRequests')(appReq) // Reutilización
+const UserRequests = require('../../user/__test__/UserRequests')(appReq) // Reusing
 
 let token = null
 
 beforeEach(async()=>{
     await User.destroy({where:{},truncate:true})
     await Task.destroy({where:{},truncate:true})
-    const res = await UserRequests.create() // Se crea un usuario antes de cada test
+    const res = await UserRequests.create() // It creates a user before each test
     token = res.body.token
 })
 
