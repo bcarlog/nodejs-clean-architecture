@@ -21,7 +21,7 @@ npm run test
 
 ## Index
 
-[1. component-based architecture](#headers)
+[1. Component-based architecture](#headers)
 
 [2. Validations](#validations)
 
@@ -37,7 +37,7 @@ npm run test
 
 <a name="architecture-base-components"/>
 
-## component-based architecture
+## Component-based architecture
 
 Each folder represents a component, in this case tasks and users.
 
@@ -247,5 +247,6 @@ await Task.update({
 In the database 1 es ACTIVE and 2 is INACTIVE
 
 Example 1 is not intuitive, if after a week you look at it maybe you don't remember what the hell means 2.
+
 Example 2 is more intuitive, Therefore It's easier to read and understand.
 
